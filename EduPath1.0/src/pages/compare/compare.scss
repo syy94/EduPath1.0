@@ -1,0 +1,11 @@
+﻿page-compare {
+    .child {
+        height: 50%;
+    }
+
+    .parent {
+        overflow: hidden;
+        height: 100%;
+        scroll: false
+    }
+}

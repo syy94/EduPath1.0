@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Courses</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item [hidden]="courses.length > 0">
+            {{debug}}
+        </ion-item>
+        <ion-item *ngFor="let course of courses" (tap)="courseClick(course.id)" (press)="onHold()">
+            <ion-avatar item-left>
+                <img src="">
+            </ion-avatar>
+            <h2>{{course.name}}</h2>
+            <p>{{course.poly}}</p>
+        </ion-item>
+    </ion-list>
+    <p>Debug: {{debug}}</p>
+</ion-content>

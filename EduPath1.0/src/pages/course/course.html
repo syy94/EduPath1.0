@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{course.name}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-card class="cards-list" (click)="itemTapped($event, course.id)">
+            <ion-card-header>
+                <strong>Course Code</strong>
+            </ion-card-header>
+            <ion-card-content>
+                {{course.id}}
+            </ion-card-content>
+            
+            <ion-card-header>
+                <strong>Details</strong>
+            </ion-card-header>
+            <ion-card-content>
+                <ion-list>
+                    <p>{{course.poly}}</p>
+                    <p>{{course.course_type}}</p>
+                    <p>{{course.ext_info}}</p>
+                    <p>{{course.year}}</p>
+                    <a href="course.link">Link</a>
+                </ion-list>
+            </ion-card-content>
+        </ion-card>
+    </ion-list>
+</ion-content>
