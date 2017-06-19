@@ -13,7 +13,7 @@ import { Compare } from '../pages/compare/compare';
 export class MyApp {
     @ViewChild(Nav) nav: Nav;
 
-    rootPage: any = Compare;
+    rootPage: any = CourseList;
 
     pages: Array<{ title: string, component: any }>;
 
