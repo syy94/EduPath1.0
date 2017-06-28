@@ -1,0 +1,62 @@
+<ion-card>
+    <ion-item class="card-header" text-wrap>
+        <div item-right href="course.link">
+            <ion-icon name="link"></ion-icon>
+        </div>
+        <div class="circle" [style.background-color]="course.color" item-left>
+            <div>{{course.id}}</div>
+        </div>
+        <h2>{{course.name}}</h2>
+    </ion-item>
+
+    <ion-item>
+        <strong>Course Code</strong>
+        <p item-right>{{course.id}}</p>
+    </ion-item>
+    <ion-item>
+        <strong>School</strong>
+        <p item-right>{{course.poly}}</p>
+    </ion-item>
+    <ion-item>
+        <strong>Year</strong>
+        <p item-right>{{course.year}}</p>
+    </ion-item>
+    <ion-item>
+        <strong>Score</strong>
+        <p item-right>{{course.score}}</p>
+    </ion-item>
+    <ion-item>
+        <strong>Type</strong>
+        <ion-item>
+            <p>{{course.course_type}}</p>
+        </ion-item>
+    </ion-item>
+    <div *ngFor="let header of course.ext_info | objKeys">
+        <ion-item-divider class="top-divider" (click)="toggleHidden($event, header)">
+            {{ header | removeJsonIndex }}
+            <ion-icon item-right [name]="isHidden(header) ? 'arrow-dropright' : 'arrow-dropdown'"></ion-icon>
+        </ion-item-divider>
+        <div *ngIf="!isArray(header)">
+            <div *ngFor="let subHeader of course.ext_info[header] | objKeys" [hidden]="isHidden(header)" >
+                <ion-item-divider class="no-last-list-div subheader"
+                                  (click)="toggleHidden($event, header, subHeader)">
+                    {{ subHeader | removeJsonIndex }}
+                    <ion-icon item-right [name]="isHidden(header, subHeader) ? 'arrow-dropright' : 'arrow-dropdown'"></ion-icon>
+                </ion-item-divider>
+                <ion-item class="subheader" [hidden]="isHidden(header, subHeader)">
+                    <p text-wrap *ngFor="let detail of course.ext_info[header][subHeader]">
+                        {{ detail }}
+                    </p>
+                </ion-item>
+
+            </div>
+        </div>
+        <div *ngIf="isArray(header)">
+            <ion-item [hidden]="isHidden(header)">
+                <p text-wrap *ngFor="let detail of course.ext_info[header]">
+                    {{ detail }}
+                </p>
+            </ion-item>
+        </div>
+    </div>
+</ion-card>

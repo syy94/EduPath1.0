@@ -2,9 +2,10 @@
     name: string,
     url: string,
     poly: string,
-    ext_info: string,
+    ext_info: Object,
     course_type: string,
     score: string,
     year: string,
-    id: string
+    id: string,
+    color : string
 }

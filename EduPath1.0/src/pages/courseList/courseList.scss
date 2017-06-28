@@ -8,7 +8,7 @@ page-courseList {
     }
 
     .circle {
-        width: 50px;
+        padding: 5px 5px 5px 5px;
         -moz-border-radius: 50%;
         -webkit-border-radius: 50%;
         border-radius: 50%;
@@ -97,5 +97,29 @@ page-courseList {
         100% {
             -moz-transform: rotate(360deg);
         }
+    }
+
+    .heart {
+        color: red;
+    }
+
+    .selection {
+        padding: 0 0 0 0;
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 0px;
+        z-index: 3 !important;
+        background-color: white;
+        box-shadow: 0 0 10px 3px #ccc;
+    }
+
+    .subtitle {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .transparent_btn {
+        background-color: transparent;
+        box-shadow: none;
     }
 }

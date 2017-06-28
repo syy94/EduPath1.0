@@ -9,33 +9,6 @@
 
 <ion-content class="parent">
     <ion-content *ngFor="let course of courses" class="child">
-        <ion-card class="cards-list" (click)="itemTapped($event, course.id)">
-            <ion-card-header>
-                <strong>Course Code</strong>
-            </ion-card-header>
-            <ion-card-content>
-                {{course.id}}
-            </ion-card-content>
-
-            <ion-card-header>
-                <strong>Details</strong>
-            </ion-card-header>
-            <ion-card-content>
-                <ion-list>
-                    <p>{{course.poly}}</p>
-                    <p>{{course.course_type}}</p>
-                    <p>{{course.ext_info}}</p>
-                    <p>{{course.year}}</p>
-                    <a href="course.link">Link</a>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus iaculis turpis erat, eget eleifend elit interdum et. Nulla sit amet arcu tellus. Aliquam facilisis lectus dolor, id posuere sem molestie id. Nam quis risus maximus, posuere justo et, luctus risus. Fusce lobortis, lectus eu facilisis auctor, nunc erat aliquam nibh, eget varius ligula lacus at leo. Donec eu sagittis libero, ac faucibus diam. Praesent vestibulum felis ac magna porta scelerisque id malesuada orci. Sed vitae nisl ut ante porttitor dapibus eget sed urna. Morbi a tortor ut velit eleifend vulputate. Nam at ullamcorper dolor. Morbi faucibus fermentum arcu tincidunt accumsan. Etiam sodales magna arcu. Praesent nec ante vestibulum, congue nisi ut, ornare justo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-
-                        In mattis, nisi vel accumsan porta, erat quam gravida turpis, at placerat turpis purus ac tellus. Nullam rhoncus sem magna, quis aliquet ex iaculis nec. Curabitur id eros neque. Ut tincidunt est at condimentum mollis. Aenean fringilla in tellus at rhoncus. Nullam non dapibus nulla. Cras commodo diam et tortor hendrerit commodo.
-
-                        Sed consectetur lectus et condimentum fringilla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent molestie at neque non finibus. Mauris ut imperdiet nisi. Duis ultricies lorem vel metus egestas, at lacinia quam bibendum. Aliquam sed diam vitae mi viverra eleifend pretium vel est. Praesent molestie, felis convallis feugiat tempor, arcu justo laoreet nisi, vitae tincidunt nibh eros eleifend mi. Pellentesque auctor fringilla maximus. Etiam ante massa, suscipit sed suscipit porttitor, blandit scelerisque eros. Curabitur fermentum turpis nisl, vitae mattis magna gravida sit amet. Mauris aliquam libero elementum mauris lobortis, ac varius mauris mattis. Duis mi neque, fermentum vel purus in, convallis dapibus ligula. Pellentesque non felis sed enim semper porta.
-                    </p>
-                </ion-list>
-            </ion-card-content>
-        </ion-card>
+        <course-item [course]="course"></course-item>
     </ion-content>
 </ion-content>

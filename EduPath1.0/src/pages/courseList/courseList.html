@@ -3,24 +3,51 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Courses</ion-title>
+        <ion-title>EduPath</ion-title>
+        <div class="subtitle">Sort by: {{sort}}</div>
+        <ion-buttons end>
+            <button ion-button transparent (click)="sortBy($event)">
+                <ion-icon name="funnel"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
     <ion-list>
+        <div class="selection" [hidden]="selection.length == 0">
+            <ion-list>
+                <ion-item *ngFor="let selected of selection" (click)="removeSelection($event, selected)">
+                    <div item-left>
+                        <ion-icon name="close"></ion-icon>
+                    </div>
+                    <div class="circle" [style.background-color]="selected.color" item-left>
+                        <div>{{selected.id}}</div>
+                    </div>
+                    <h2>{{selected.name}}</h2>
+                </ion-item>
+            </ion-list>
+            <button ion-button full [outline]="isActivated" [disabled]="isActivated" (click)="quickCompare($event)">
+                {{compareText}}
+            </button>
+            <button ion-button full color="danger" (click)="clearSelection($event)">
+                clear
+            </button>
+        </div>
         <ion-item [hidden]="courses.length > 0">
             No Courses Found
         </ion-item>
-        <ion-item *ngFor="let course of courses" (press)="onHold($event)" (click)="courseClick($event, course.id)" (tap)="placeholder()">
-            <div class="circle" [style.background-color]="'#00ffff'" item-left>
+        <ion-item *ngFor="let course of courses" (press)="onHold($event, course)" (click)="courseClick($event, course)" (tap)="placeholder()">
+            <div class="circle" [style.background-color]="course.color" item-left>
                 <div>{{course.id}}</div>
             </div>
             <h2>{{course.name}}</h2>
             <p>{{course.poly}}:{{course.score}}</p>
-            <div item-right (click)='favourite($event)'>
-                <ion-icon name="heart-outline"></ion-icon>
-            </div>
+
+            <button class="transparent_btn" ion-button item-right (click)='favourite($event, course.id)'>
+                <ion-icon [name]="isFav(course.id) ? 'heart' : 'heart-outline'" class="heart"></ion-icon>
+            </button>
+
         </ion-item>
         <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
             <ion-infinite-scroll-content loadingSpinner="bubbles"

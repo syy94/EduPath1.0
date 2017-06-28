@@ -1,0 +1,29 @@
+﻿course-item {
+    .card-header {
+        border-bottom: 1px solid #dedede;
+    }
+
+    .top-divider {
+        /*border-top: 1px solid #dedede;*/
+        margin-bottom: 0px;
+    }
+    /*.top-divider ion-icon {
+        min-height: 2.8rem;
+        font-size: 2.8rem;
+        line-height: 1;
+        float: right;
+    }*/
+    .item-md {
+        background-color: transparent;
+    }
+
+    .no-last-list-div:last-child {
+        border-bottom: 0px;
+        border-bottom-width: 0px;
+        background-color: gray;
+    }
+
+    .subheader {
+        padding-left: 32px;
+    }
+}

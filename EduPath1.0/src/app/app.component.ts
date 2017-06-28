@@ -2,10 +2,11 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
+import { AppPreferences } from '@ionic-native/app-preferences';
+
 import { CourseList } from '../pages/courselist/courselist';
 import { Course } from '../pages/course/course';
 import { Compare } from '../pages/compare/compare';
-
 
 @Component({
     templateUrl: 'app.html'
@@ -17,16 +18,14 @@ export class MyApp {
 
     pages: Array<{ title: string, component: any }>;
 
-    constructor(public platform: Platform) {
+    constructor(public platform: Platform, private appPrefs: AppPreferences) {
         this.initializeApp();
 
         // used for an example of ngFor and navigation
         this.pages = [
-            { title: 'CourseList', component: CourseList },
-            { title: 'Course', component: Course },
-            { title: 'Compare', component: Compare }
+            { title: 'CourseList', component: CourseList }
         ];
-
+       
     }
 
     initializeApp() {

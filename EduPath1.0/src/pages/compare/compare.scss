@@ -4,7 +4,15 @@
     }
 
     .parent {
-        overflow: hidden;
         height: 100%;
+    }
+
+    .details {
+        margin-left: 16px;
+        margin-right: 16px;
+        margin-top: 9px;
+        margin-bottom: 9px;
+        text-align: justify;
+        text-justify: inter-word;
     }
 }

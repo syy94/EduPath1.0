@@ -1,0 +1,6 @@
+﻿<ion-list>
+    <ion-list-header>
+        Sort
+    </ion-list-header>
+    <ion-item *ngFor="let sort of sortTypes" (click) ="selectType($event, sort)">{{sort.name}}</ion-item>
+</ion-list>
