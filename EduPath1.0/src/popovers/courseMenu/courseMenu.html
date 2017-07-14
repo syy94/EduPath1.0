@@ -1,0 +1,6 @@
+﻿<ion-list>
+    <ion-item *ngFor="let course of courses">
+        <course-list-item [course]="course" (click)="selectType($event, course)">
+        </course-list-item>
+    </ion-item>
+</ion-list>

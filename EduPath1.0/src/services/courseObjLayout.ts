@@ -2,10 +2,12 @@
     name: string,
     url: string,
     poly: string,
-    ext_info: Object,
-    course_type: string,
+    structure: Object,
+    cluster: string,
     score: string,
     year: string,
     id: string,
-    color : string
+    description: string,
+    color: string,
+    intake: number
 }

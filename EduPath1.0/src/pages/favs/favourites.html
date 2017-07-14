@@ -3,15 +3,15 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>{{title}}</ion-title>
+        <ion-title>Favourites</ion-title>
         <div class="subtitle">Sort by: {{sort}}</div>
 
         <ion-buttons end>
             <button ion-button transparent (click)="toggleSearch()">
                 <ion-icon name="search"></ion-icon>
             </button>
-            <button ion-button (click)="sortBy($event)">
-                <ion-icon name="funnel"></ion-icon>
+            <button *ngIf="courses.length > 2" ion-button transparent (click)="compareAll()">
+                Compare ALL
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -44,7 +44,7 @@
         <ion-item [hidden]="courses.length > 0">
             No Courses Found
         </ion-item>
-        <ion-item *ngFor="let course of courses" (press)="onHold($event, course)" (click)="courseClick($event, course)" (tap)="placeholder()">
+        <ion-item *ngFor="let course of (courses | filterCourse: search_key)" (press)="onHold($event, course)" (click)="courseClick($event, course)" (tap)="placeholder()">
             <course-list-item [course]="course"></course-list-item>
             <div class="extras" item-right (click)='favourite($event, course.id)'>
                 <p>{{course.poly}}</p>
@@ -54,10 +54,10 @@
                 </button>
             </div>
         </ion-item>
-        <ion-infinite-scroll [enabled]="infEnabled" (ionInfinite)="doInfinite($event)">
+        <!--<ion-infinite-scroll [enabled]="infEnabled" (ionInfinite)="doInfinite($event)">
             <ion-infinite-scroll-content loadingSpinner="bubbles"
                                          loadingText="Loading more courses..."></ion-infinite-scroll-content>
-        </ion-infinite-scroll>
+        </ion-infinite-scroll>-->
     </ion-list>
     {{courses.length}}
 </ion-content>

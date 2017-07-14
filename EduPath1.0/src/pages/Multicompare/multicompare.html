@@ -1,0 +1,14 @@
+﻿<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Compare</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="parent">
+    <ion-content *ngFor="let id of shown_id; let i = index" class="child">
+        <course-item [course]="courseMap.get(id)" multi="true" (selector)="selector($event, i)" (leftClick)="left($event, i)" (rightClick)="right($event, i)"></course-item>
+    </ion-content>
+</ion-content>

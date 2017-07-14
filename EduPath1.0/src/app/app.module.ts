@@ -1,17 +1,23 @@
-/// <reference path="../pages/course/course.component.ts" />
+import { UserService } from "./testservice";
+
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { AppPreferences } from '@ionic-native/app-preferences';
+import { SQLite } from '@ionic-native/sqlite';
 import { MyApp } from './app.component';
 
 import { CourseList } from '../pages/courselist/courselist';
+import { CourseListItem } from '../pages/courselist/courselist.item';
 import { Course } from '../pages/course/course';
 import { Compare } from '../pages/compare/compare';
-import { AppPreferences } from '@ionic-native/app-preferences';
-import { SortMenu } from '../popovers/sortmenu/sortmenu';
-import { SQLite } from '@ionic-native/sqlite';
-import { ObjKeysPipe, RemoveJsonIndexPipe } from "../pipes/pipe";
-import { CourseItem } from "../pages/course/course.component.ts";
+import { CourseItem } from "../pages/course/course.component";
+import { FavList } from "../pages/favs/favourites";
+import { MultiCompare } from "../pages/multicompare/multicompare";
 
+import { SortMenu } from "../popovers/sortmenu/sortmenu";
+import { CourseMenu } from "../popovers/coursemenu/coursemenu";
+
+import { ObjKeysPipe, RemoveJsonIndexPipe, FilterCoursePipe } from "../pipes/pipe";
 
 @NgModule({
     declarations: [
@@ -19,10 +25,18 @@ import { CourseItem } from "../pages/course/course.component.ts";
         CourseList,
         Course,
         Compare,
+        MultiCompare,
+        FavList,
+
         SortMenu,
+        CourseMenu,
+
+        CourseItem,
+        CourseListItem,
+
         ObjKeysPipe,
         RemoveJsonIndexPipe,
-        CourseItem
+        FilterCoursePipe
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -33,7 +47,10 @@ import { CourseItem } from "../pages/course/course.component.ts";
         CourseList,
         Course,
         Compare,
-        SortMenu
+        SortMenu,
+        CourseMenu,
+        FavList,
+        MultiCompare
     ],
     providers: [
         { provide: ErrorHandler, useClass: IonicErrorHandler },

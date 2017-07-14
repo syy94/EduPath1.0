@@ -1,13 +1,35 @@
 <ion-card>
-    <ion-item class="card-header" text-wrap>
-        <div item-right href="course.link">
-            <ion-icon name="link"></ion-icon>
-        </div>
-        <div class="circle" [style.background-color]="course.color" item-left>
-            <div>{{course.id}}</div>
-        </div>
-        <h2>{{course.name}}</h2>
+    <ion-item class="card-header" text-wrap *ngIf="!courses">
+        <course-list-item [course]="course"></course-list-item>
     </ion-item>
+
+    <ion-item class="card-header" text-wrap *ngIf="courses">
+        <button color="faded" ion-button clear item-left icon-only (click)="left($event)">
+            <ion-icon name="arrow-dropleft-circle"></ion-icon>
+        </button>
+        <course-list-item [course]="course" (click)="select($event)"></course-list-item>
+        <button color="faded" ion-button clear item-right icon-only (click)="right($event)">
+            <ion-icon name="arrow-dropright-circle"></ion-icon>
+        </button>
+    </ion-item>
+
+    <ion-grid class="card-header" no-padding>
+        <ion-row>
+            <ion-col>
+                <button class="text-on-bottom" color="text" ion-button clear full (click)="toggleFav(course.id)">
+                    <ion-icon class="btn-icon" color="danger" [name]="isFav(course.id) ? 'heart' : 'heart-outline'"></ion-icon>
+                    Favourite
+                </button>
+            </ion-col>
+            <ion-col>
+                <button class="text-on-bottom" color="text" ion-button clear full>
+                    <ion-icon class="btn-icon" name="link"></ion-icon>
+                    Website
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
 
     <ion-item>
         <strong>Course Code</strong>
@@ -26,25 +48,31 @@
         <p item-right>{{course.score}}</p>
     </ion-item>
     <ion-item>
-        <strong>Type</strong>
+        <strong>Cluster</strong>
         <ion-item>
-            <p>{{course.course_type}}</p>
+            <p>{{course.cluster}}</p>
         </ion-item>
     </ion-item>
-    <div *ngFor="let header of course.ext_info | objKeys">
+    <ion-card-header>
+        <strong>Description</strong>
+    </ion-card-header>
+    <ion-card-content>
+        <p text-wrap [innerHTML]="course.description"></p>
+    </ion-card-content>
+    <div *ngFor="let header of course.structure | objKeys">
         <ion-item-divider class="top-divider" (click)="toggleHidden($event, header)">
             {{ header | removeJsonIndex }}
             <ion-icon item-right [name]="isHidden(header) ? 'arrow-dropright' : 'arrow-dropdown'"></ion-icon>
         </ion-item-divider>
         <div *ngIf="!isArray(header)">
-            <div *ngFor="let subHeader of course.ext_info[header] | objKeys" [hidden]="isHidden(header)" >
+            <div *ngFor="let subHeader of course.structure[header] | objKeys" [hidden]="isHidden(header)">
                 <ion-item-divider class="no-last-list-div subheader"
                                   (click)="toggleHidden($event, header, subHeader)">
                     {{ subHeader | removeJsonIndex }}
                     <ion-icon item-right [name]="isHidden(header, subHeader) ? 'arrow-dropright' : 'arrow-dropdown'"></ion-icon>
                 </ion-item-divider>
                 <ion-item class="subheader" [hidden]="isHidden(header, subHeader)">
-                    <p text-wrap *ngFor="let detail of course.ext_info[header][subHeader]">
+                    <p text-wrap *ngFor="let detail of course.structure[header][subHeader]">
                         {{ detail }}
                     </p>
                 </ion-item>
@@ -53,7 +81,7 @@
         </div>
         <div *ngIf="isArray(header)">
             <ion-item [hidden]="isHidden(header)">
-                <p text-wrap *ngFor="let detail of course.ext_info[header]">
+                <p text-wrap *ngFor="let detail of course.structure[header]">
                     {{ detail }}
                 </p>
             </ion-item>

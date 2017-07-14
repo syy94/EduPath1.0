@@ -1,0 +1,21 @@
+﻿course-list-item {
+    .container {
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+    }
+
+    .fixed {
+        background-color: transparent;
+        margin-right: 8px;
+    }
+
+    .flex-item {
+        background-color: transparent;
+        flex-grow: 1;
+    }
+
+    h2{
+        color: #222;
+    }
+}

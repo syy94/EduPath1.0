@@ -1,4 +1,24 @@
 ﻿course-item {
+    .text-on-bottom > .button-inner {
+        flex-direction: column;
+        display: flex;
+    }
+
+    .text-on-bottom {
+        overflow: hidden;
+        min-height: 70px;
+        margin: 0;
+    }
+
+    .btn-text {
+        font-size: 1.4rem;
+        text-transform: none;
+    }
+
+    .btn-icon {
+        padding: 8px 8px 8px 8px;
+    }
+
     .card-header {
         border-bottom: 1px solid #dedede;
     }
@@ -6,6 +26,8 @@
     .top-divider {
         /*border-top: 1px solid #dedede;*/
         margin-bottom: 0px;
+        font-weight: bold;
+        color: black;
     }
     /*.top-divider ion-icon {
         min-height: 2.8rem;
@@ -25,5 +47,15 @@
 
     .subheader {
         padding-left: 32px;
+    }
+
+    .sticky {
+        padding: 0 0 0 0;
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 0px;
+        z-index: 3 !important;
+        background-color: white;
+        box-shadow: 0 0 10px 3px #ccc;
     }
 }

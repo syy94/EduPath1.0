@@ -1,42 +1,107 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {NavController, NavParams} from "ionic-angular";
 import { Http, Headers} from "@angular/http";
+import { AppPreferences } from '@ionic-native/app-preferences';
 
-import { courseObjLayout } from '../../services/courseobjlayout'
+import { courseObjLayout } from "../../services/courseobjlayout";
 
 @Component({
     templateUrl: "course.component.html",
     selector: "course-item"
 })
 export class CourseItem {
-    @Input('course') course: courseObjLayout;
+
+    @Input("course") course: courseObjLayout;
+
+    @Input("multi") courses: boolean = false;
+    @Input("current-id") curr: string;
+
+    @Output() leftClick: EventEmitter<any> = new EventEmitter();
+    @Output() rightClick: EventEmitter<any> = new EventEmitter();
+    @Output() selector: EventEmitter<any> = new EventEmitter();
 
     output: string = "";
 
     private nav: NavController;
+    private favs: Array<string> = [];
 
-    constructor(nav: NavController, public http: Http) {
+    constructor(nav: NavController, public http: Http, private appPrefs: AppPreferences) {
+        document.addEventListener('pause', () => {
+            this.ionViewWillLeave();
+        });
+
+        document.addEventListener('resume', () => {
+            this.ionViewDidEnter();
+        });
         this.nav = nav;
-        console.log(JSON.stringify(this.course));
-        //this.model = this.model || new ArticleFeatureModel();
+        this.ionViewDidEnter();
+    }
+
+    isFav(id) {
+        return this.favs.indexOf(id) > -1;
+    }
+
+    //Does not seem to automatically run when view in entered
+    //maybe if used like this it is not part of the lifecycle?
+    ionViewDidEnter() {
+        this.appPrefs.fetch("favourites").then((res: string) => {
+            if (res != null) {
+                console.log("get" + res)
+                this.favs = JSON.parse(res);
+            }
+        });
+        console.log('ENTER');
+    }
+
+    //Does not seem to automatically run when view in entered
+    //maybe if used like this it is not part of the lifecycle?
+    ionViewWillLeave() {
+        console.log(JSON.stringify(this.favs));
+        this.appPrefs.store("favourites", JSON.stringify(this.favs)).then(res => {
+            console.log("store" + JSON.stringify(res));
+        });
+        console.log('Exit');
+    }
+
+    right(event) {
+        this.rightClick.emit(event);
+    }
+
+    left(event) {
+        this.leftClick.emit(event);
+    }
+
+    select(event) {
+        this.selector.emit(event);
+    }
+
+    toggleFav(id) {
+        let index = this.favs.indexOf(id);
+
+        if (index > -1) {
+            this.favs.splice(index, 1);
+        } else {
+            this.favs.push(id);
+        }
+
+        this.ionViewWillLeave();
+        event.stopPropagation();
     }
 
     isArray(header) {
-        console.log(header)
-        console.log((this.course.ext_info[header] instanceof Array))
-        return (this.course.ext_info[header] instanceof Array);
+        return (this.course.structure[header] instanceof Array);
     }
 
     isHidden(header, subHeader) {
-        if (this.course.ext_info == null) {
+        if (this.course.structure == null) {
             return;
         }
 
         let headerObj;
         if (subHeader != null) {
-            headerObj = this.course.ext_info[header][subHeader];
+            headerObj = this.course.structure[header][subHeader];
         } else {
-            headerObj = this.course.ext_info[header];
+            headerObj = this.course.structure[header];
         }
 
         if (headerObj.hidden == null) {
@@ -48,15 +113,15 @@ export class CourseItem {
     }
 
     toggleHidden(event, header, subHeader) {
-        if (this.course.ext_info == null) {
+        if (this.course.structure == null) {
             return;
         }
 
         let headerObj;
         if (subHeader != null) {
-            headerObj = this.course.ext_info[header][subHeader];
+            headerObj = this.course.structure[header][subHeader];
         } else {
-            headerObj = this.course.ext_info[header];
+            headerObj = this.course.structure[header];
         }
 
         if (headerObj.hidden != null) {
