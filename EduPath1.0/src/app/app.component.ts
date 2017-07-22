@@ -25,7 +25,7 @@ export class MyApp {
         // used for an example of ngFor and navigation
         this.pages = [
             { title: 'Home', component: FavList },
-            { title: 'All', component: CourseList },
+            { title: 'All Polytechnics', component: CourseList },
             { title: 'Temasek Polytechnic', school:"TP", component: CourseList },
             { title: 'Nanyang Polytechnic', school: "NYP", component: CourseList },
             { title: 'Ngee Ann Polytechnic', school: "NP", component: CourseList },

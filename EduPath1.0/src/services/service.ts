@@ -121,7 +121,12 @@ export class SearchCourses {
 export class FavService {
     constructor(private http: Http) { }
 
-    get(id_list, success: (res) => any, error?: (err) => any) {
+    get(id_list: Array<any>, success: (res) => any, error?: (err) => any) {
+        if (id_list.length == 0) {
+            success([]);
+            return;
+        }
+
         this.http.post('https://edulab-1377.appspot.com/_ah/api/favs', JSON.stringify(id_list), { headers: headers }).subscribe(res => {
             if (res.json() != null) {
                 let result = addColor(res.json());

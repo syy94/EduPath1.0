@@ -63,8 +63,9 @@ export class FavList {
     ionViewDidEnter() {
         this.appPrefs.fetch("favourites").then((res: string) => {
             if (res != null) {
-                console.log("get" + res)
-                this.favs = JSON.parse(res);
+                if (res.length != 0) {
+                    this.favs = JSON.parse(res);
+                }
                 this.favService.get(this.favs, res => {
                     this.courses = res;
                     this.isEmpty = this.courses.length == 0;
