@@ -3,8 +3,7 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Favourites</ion-title>
-        <div class="subtitle">Sort by: {{sort}}</div>
+        <ion-title>EduPath</ion-title>
 
         <ion-buttons end>
             <button ion-button transparent (click)="toggleSearch()">
@@ -24,6 +23,16 @@
 </ion-header>
 
 <ion-content>
+    <ion-item-divider *ngIf="courses.length == 0 && !isEmpty">
+        <ion-spinner class="center"></ion-spinner>
+    </ion-item-divider>
+    <ion-item-divider class="center" text-wrap *ngIf="isEmpty">
+        <h2>Click on the <ion-icon color="danger" name="heart-outline"></ion-icon> icon to add Courses</h2>
+        <br>
+        <p>Once this list have more than 2 courses, the compare all option will be activated.</p>
+        <br>
+        <p>Tip: Long press for Quick Compare</p>
+    </ion-item-divider>
     <ion-list>
         <div class="selection" [hidden]="selection.length == 0">
             <ion-list>
@@ -41,9 +50,6 @@
                 clear
             </button>
         </div>
-        <ion-item [hidden]="courses.length > 0">
-            No Courses Found
-        </ion-item>
         <ion-item *ngFor="let course of (courses | filterCourse: search_key)" (press)="onHold($event, course)" (click)="courseClick($event, course)" (tap)="placeholder()">
             <course-list-item [course]="course"></course-list-item>
             <div class="extras" item-right (click)='favourite($event, course.id)'>
@@ -59,5 +65,4 @@
                                          loadingText="Loading more courses..."></ion-infinite-scroll-content>
         </ion-infinite-scroll>-->
     </ion-list>
-    {{courses.length}}
 </ion-content>

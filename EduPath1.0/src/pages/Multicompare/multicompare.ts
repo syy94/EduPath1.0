@@ -54,12 +54,20 @@ export class MultiCompare {
                 if (this.topIndex < 0) {
                     this.topIndex = this.courses.length - 1;
                 }
+                if (this.topIndex == this.botIndex) {
+                    this.left(event, i);
+                    return;
+                }
                 index = this.topIndex;
                 break;
             case 1: //bot course
                 this.botIndex--;
                 if (this.botIndex < 0) {
                     this.botIndex = this.courses.length - 1;
+                }
+                if (this.topIndex == this.botIndex) {
+                    this.left(event, i);
+                    return;
                 }
                 index = this.botIndex;
                 break;
@@ -74,14 +82,22 @@ export class MultiCompare {
         switch (i) {
             case 0: //top course
                 this.topIndex = (this.topIndex + 1) % length;
+                if (this.topIndex == this.botIndex) {
+                    this.right(event, i);
+                    return;
+                }
                 index = this.topIndex;
                 break;
             case 1: //bot course
                 this.botIndex = (this.botIndex + 1) % length;
+                if (this.botIndex == this.topIndex) {
+                    this.right(event, i);
+                    return;
+                }
                 index = this.botIndex;
                 break;
         }
-
+     
         this.replaceCourse(i, this.courses[index]);
     }
 

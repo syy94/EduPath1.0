@@ -22,7 +22,7 @@
                 </button>
             </ion-col>
             <ion-col>
-                <button class="text-on-bottom" color="text" ion-button clear full>
+                <button class="text-on-bottom" color="text" ion-button clear full [disabled]="!course.url" (click)="goToWebsite(course.url)">
                     <ion-icon class="btn-icon" name="link"></ion-icon>
                     Website
                 </button>
@@ -30,35 +30,45 @@
         </ion-row>
     </ion-grid>
 
-
-    <ion-item>
-        <strong>Course Code</strong>
-        <p item-right>{{course.id}}</p>
-    </ion-item>
-    <ion-item>
-        <strong>School</strong>
-        <p item-right>{{course.poly}}</p>
-    </ion-item>
-    <ion-item>
-        <strong>Year</strong>
-        <p item-right>{{course.year}}</p>
-    </ion-item>
-    <ion-item>
-        <strong>Score</strong>
-        <p item-right>{{course.score}}</p>
-    </ion-item>
-    <ion-item>
-        <strong>Cluster</strong>
+    <div class="information card-header">
         <ion-item>
-            <p>{{course.cluster}}</p>
+            <strong>Course Code</strong>
+            <ion-spinner item-right *ngIf="!course.id"></ion-spinner>
+            <p item-right *ngIf="course.id">{{course.id}}</p>
         </ion-item>
-    </ion-item>
-    <ion-card-header>
-        <strong>Description</strong>
-    </ion-card-header>
-    <ion-card-content>
-        <p text-wrap [innerHTML]="course.description"></p>
+        <ion-item>
+            <strong>School</strong>
+            <ion-spinner item-right *ngIf="!course.poly"></ion-spinner>
+            <p item-right *ngIf="course.poly">{{course.poly}}</p>
+        </ion-item>
+        <ion-item>
+            <strong>Year</strong>
+            <ion-spinner item-right *ngIf="!course.year"></ion-spinner>
+            <p item-right *ngIf="course.year">{{course.year}}</p>
+        </ion-item>
+        <ion-item>
+            <strong>Score</strong>
+            <ion-spinner item-right *ngIf="!course.score"></ion-spinner>
+            <p item-right *ngIf="course.score">{{course.score}} pts</p>
+        </ion-item>
+        <ion-item>
+            <strong>Cluster</strong>
+            <ion-item>
+                <ion-spinner item-right *ngIf="!course.cluster"></ion-spinner>
+                <p *ngIf="course.cluster">{{course.cluster}}</p>
+            </ion-item>
+        </ion-item>
+    </div>
+
+    <ion-card-content class="card-header" *ngIf="course.description">
+        <p [innerHTML]="course.description"></p>
     </ion-card-content>
+
+    <ion-card-content class="card-header" *ngIf="!course.description && !course.structure">
+        <p class="center">Sorry, unable to get the details</p>
+        <p class="center">Try visiting their website</p>
+    </ion-card-content>
+
     <div *ngFor="let header of course.structure | objKeys">
         <ion-item-divider class="top-divider" (click)="toggleHidden($event, header)">
             {{ header | removeJsonIndex }}
@@ -71,7 +81,7 @@
                     {{ subHeader | removeJsonIndex }}
                     <ion-icon item-right [name]="isHidden(header, subHeader) ? 'arrow-dropright' : 'arrow-dropdown'"></ion-icon>
                 </ion-item-divider>
-                <ion-item class="subheader" [hidden]="isHidden(header, subHeader)">
+                <ion-item class="subheader information" [hidden]="isHidden(header, subHeader)">
                     <p text-wrap *ngFor="let detail of course.structure[header][subHeader]">
                         {{ detail }}
                     </p>
@@ -80,7 +90,7 @@
             </div>
         </div>
         <div *ngIf="isArray(header)">
-            <ion-item [hidden]="isHidden(header)">
+            <ion-item [hidden]="isHidden(header)" class="information">
                 <p text-wrap *ngFor="let detail of course.structure[header]">
                     {{ detail }}
                 </p>

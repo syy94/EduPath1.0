@@ -15,7 +15,7 @@ import { FavList } from "../pages/favs/favourites";
 export class MyApp {
     @ViewChild(Nav) nav: Nav;
 
-    rootPage: any = CourseList;
+    rootPage: any = FavList;
 
     pages: Array<{ title: string, school?:any, component: any }>;
 
@@ -24,8 +24,8 @@ export class MyApp {
 
         // used for an example of ngFor and navigation
         this.pages = [
-            { title: 'Home', component: CourseList },
-            { title: 'Favourites', component: FavList },
+            { title: 'Home', component: FavList },
+            { title: 'All', component: CourseList },
             { title: 'Temasek Polytechnic', school:"TP", component: CourseList },
             { title: 'Nanyang Polytechnic', school: "NYP", component: CourseList },
             { title: 'Ngee Ann Polytechnic', school: "NP", component: CourseList },

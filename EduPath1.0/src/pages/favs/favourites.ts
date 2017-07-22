@@ -8,6 +8,7 @@ import { Compare } from '../compare/compare';
 import { PopoverController } from 'ionic-angular';
 import { SortMenu } from '../../popovers/sortmenu/sortmenu';
 import { FavService } from '../../services/service'
+import { courseObjLayout } from '../../services/courseobjlayout'
 import { MultiCompare } from "../multicompare/multicompare";
 
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
@@ -28,11 +29,12 @@ export class FavList {
     shouldSearch: boolean = false;
     isActivated: boolean = true;
 
-    private temp: Array<any> = [];
-    selection: Array<any> = [];
-    courses: Array<any> = [];
+    private temp: Array<courseObjLayout> = [];
+    selection: Array<courseObjLayout> = [];
+    courses: Array<courseObjLayout> = [];
     favs: Array<string> = [];
     favService: FavService;
+    isEmpty: boolean = false;
 
     constructor(
         public navCtrl: NavController,
@@ -65,6 +67,7 @@ export class FavList {
                 this.favs = JSON.parse(res);
                 this.favService.get(this.favs, res => {
                     this.courses = res;
+                    this.isEmpty = this.courses.length == 0;
                 });
             }
         });

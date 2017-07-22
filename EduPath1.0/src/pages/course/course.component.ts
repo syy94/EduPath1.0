@@ -2,6 +2,7 @@ import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {NavController, NavParams} from "ionic-angular";
 import { Http, Headers} from "@angular/http";
 import { AppPreferences } from '@ionic-native/app-preferences';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { courseObjLayout } from "../../services/courseobjlayout";
 
@@ -10,7 +11,6 @@ import { courseObjLayout } from "../../services/courseobjlayout";
     selector: "course-item"
 })
 export class CourseItem {
-
     @Input("course") course: courseObjLayout;
 
     @Input("multi") courses: boolean = false;
@@ -25,7 +25,7 @@ export class CourseItem {
     private nav: NavController;
     private favs: Array<string> = [];
 
-    constructor(nav: NavController, public http: Http, private appPrefs: AppPreferences) {
+    constructor(nav: NavController, public http: Http, private appPrefs: AppPreferences, private iab: InAppBrowser) {
         document.addEventListener('pause', () => {
             this.ionViewWillLeave();
         });
@@ -90,6 +90,10 @@ export class CourseItem {
 
     isArray(header) {
         return (this.course.structure[header] instanceof Array);
+    }
+
+    goToWebsite(course_url) {
+        const browser = this.iab.create(course_url);
     }
 
     isHidden(header, subHeader) {

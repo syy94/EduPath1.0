@@ -4,6 +4,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { AppPreferences } from '@ionic-native/app-preferences';
 import { SQLite } from '@ionic-native/sqlite';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { MyApp } from './app.component';
 
 import { CourseList } from '../pages/courselist/courselist';
@@ -55,7 +56,8 @@ import { ObjKeysPipe, RemoveJsonIndexPipe, FilterCoursePipe } from "../pipes/pip
     providers: [
         { provide: ErrorHandler, useClass: IonicErrorHandler },
         AppPreferences,
-        SQLite
+        SQLite,
+        InAppBrowser
     ]
 })
 export class AppModule { }

@@ -22,7 +22,7 @@ export class CourseList {
 
     private search_id: number = 0;
     private search_key: string;
-    title: string = "EduPath";
+    title: string = "All";
     shouldSearch: boolean = false;
     isActivated: boolean = true;
     sort: string = "Course ID";
@@ -31,6 +31,7 @@ export class CourseList {
     selection: Array<any> = [];
     courses: Array<any> = [];
     favs: Array<string> = [];
+    isLoading: boolean = true;
 
     //prefs not working on ripple emulator, use device
     prefs: String = "nadah";
@@ -66,7 +67,11 @@ export class CourseList {
             this.title = navParams.get("title");
         }
 
-        this.loadCourses.getCourses((res) => { this.courses = res });
+        this.isLoading = true;
+        this.loadCourses.getCourses((res) => {
+            this.courses = res
+            this.isLoading = false;
+        });
         this.searchCourses = new SearchCourses(http);
         //database takes too long to debug on ripple first just use list
         //console.log("constructor");
@@ -132,6 +137,7 @@ export class CourseList {
         if (this.shouldSearch) {
             this.temp = this.courses;
             this.courses = [];
+            //timeout so searchbar have time to be created and focus set
             setTimeout(() => {
                 this.searchbar.setFocus();
             });
@@ -142,12 +148,13 @@ export class CourseList {
 
     search(event) {
         this.search_key = event.target.value;
-        console.log(JSON.stringify(event.target.value));
 
         if (this.search_key != null && this.search_key.length > 1) {
+            this.isLoading = true;
             this.search_id = this.searchCourses.key(this.search_key, 0, (res, task_id) => {
+                this.isLoading = false;
                 if (this.search_id == task_id)
-                    this.courses = res
+                    this.courses = res;
             });
         }
     }
@@ -161,10 +168,14 @@ export class CourseList {
         popover.onDidDismiss((popoverData) => {
             console.log(JSON.stringify(popoverData));
             if (popoverData != null && this.sort != popoverData.name) {
+                this.isLoading = true;
                 this.sort = popoverData.name;
                 //instead of showing empty add some vars to show loading
                 this.courses.length = 0;
-                this.loadCourses.setOffset(0).setSort(popoverData.name).getCourses(res => { this.courses = res });
+                this.loadCourses.setOffset(0).setSort(popoverData.name).getCourses(res => {
+                    this.courses = res;
+                    this.isLoading = false;
+                });
             }
         });
     }

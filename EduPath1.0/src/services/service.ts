@@ -8,17 +8,20 @@ headers.append('Content-Type', 'application/json');
 let colorMap = new Map<string, any>();
 
 function addColor(courses: Array<courseObjLayout>): Array<any> {
-
     for (let course of courses) {
         if (colorMap.has(course.id)) {
             course["color"] = colorMap.get(course.id);
         } else {
-            course["color"] = "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ","
-                + Math.floor(Math.random() * 255) + ")";
+            course["color"] = "hsl(" + randomInt(0, 360) + "," + randomInt(70, 100) + "%,"
+                + randomInt(40, 90) + "%)";
             colorMap.set(course.id, course.color);
         }
     }
     return courses;
+}
+
+function randomInt(min:number , max: number) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 export class LoadCourses {
